@@ -58,7 +58,29 @@ assets/images/         # App and Google logos
 - **View Stats:** Access statistics from the home screen.
 
 ## Screenshots
-*Add screenshots here to showcase the app UI.*
+<div align="center">
+<img src="https://github.com/user-attachments/assets/c9b5d769-55ea-452d-b6e9-697d749d0be0" width="250" alt="Screenshot 1" />
+<img src="https://github.com/user-attachments/assets/6f728b2a-0cc4-493f-8e0b-b0ed9a499bdc" width="250" alt="Screenshot 2" />
+<img src="https://github.com/user-attachments/assets/b8b8f3c3-cfa7-430d-826b-14af762ad667" width="250" alt="Screenshot 3" />
+</div>
+
+<div align="center">
+<img src="https://github.com/user-attachments/assets/7b38f783-f141-443e-a22b-c128e06b5ea5" width="250" alt="Screenshot 4" />
+<img src="https://github.com/user-attachments/assets/156c7c68-977f-49dc-a223-bcfc4aef49a2" width="250" alt="Screenshot 5" />
+<img src="https://github.com/user-attachments/assets/9dc63512-cac7-4a75-9280-dbe754c61e09" width="250" alt="Screenshot 6" />
+</div>
+
+<div align="center">
+<img src="https://github.com/user-attachments/assets/dca1ae20-b061-4f52-ae17-ad2786879173" width="250" alt="Screenshot 7" />
+<img src="https://github.com/user-attachments/assets/c2d57896-5770-4b1f-96e9-3edbfab84697" width="250" alt="Screenshot 8" />
+<img src="https://github.com/user-attachments/assets/01e6d499-a6b9-40e9-a87d-77be78d15d7d" width="250" alt="Screenshot 9" />
+</div>
+
+<div align="center">
+<img src="https://github.com/user-attachments/assets/a06e732b-0295-4e64-a1ed-80f53c2b4d14" width="250" alt="Screenshot 10" />
+<img src="https://github.com/user-attachments/assets/53f41074-41be-4f84-a630-1ab2eeab7a59" width="250" alt="Screenshot 11" />
+</div>
+
 
 ## Dependencies
 - [Flutter](https://flutter.dev/)
