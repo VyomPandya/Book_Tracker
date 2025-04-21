@@ -1,12 +1,17 @@
 import 'dart:async';
+import 'package:flutter/foundation.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:book_tracker/models/book.dart';
 import 'package:book_tracker/models/reading_goal.dart';
 
+// Import web implementation
+import 'package:book_tracker/services/database_service_web.dart' if (dart.library.io) 'dart:io';
+
 class DatabaseService {
   static final DatabaseService _instance = DatabaseService._internal();
   static Database? _database;
+  static final DatabaseServiceWeb? _webDatabase = kIsWeb ? DatabaseServiceWeb() : null;
   
   // Singleton pattern
   factory DatabaseService() => _instance;
@@ -14,12 +19,20 @@ class DatabaseService {
   DatabaseService._internal();
   
   Future<Database> get database async {
+    if (kIsWeb) {
+      throw Exception('SQLite database not available on web platform. Web platform uses Firestore instead.');
+    }
+    
     if (_database != null) return _database!;
     _database = await _initDatabase();
     return _database!;
   }
   
   Future<Database> _initDatabase() async {
+    if (kIsWeb) {
+      throw Exception('SQLite database not available on web platform.');
+    }
+    
     String path = join(await getDatabasesPath(), 'book_tracker.db');
     return await openDatabase(
       path,
@@ -79,6 +92,10 @@ class DatabaseService {
   
   // Book CRUD operations
   Future<int> insertBook(Book book) async {
+    if (kIsWeb) {
+      return _webDatabase!.insertBook(book);
+    }
+    
     final db = await database;
     final bookMap = book.toMap();
     
@@ -111,6 +128,10 @@ class DatabaseService {
   }
   
   Future<Book> getBook(String id) async {
+    if (kIsWeb) {
+      return _webDatabase!.getBook(id);
+    }
+    
     final db = await database;
     
     // Get book
@@ -139,6 +160,10 @@ class DatabaseService {
   }
   
   Future<List<Book>> getAllBooks() async {
+    if (kIsWeb) {
+      return _webDatabase!.getAllBooks();
+    }
+    
     final db = await database;
     final List<Map<String, dynamic>> bookMaps = await db.query('books');
     
@@ -158,6 +183,10 @@ class DatabaseService {
   }
   
   Future<List<Book>> getBooksByStatus(ReadingStatus status) async {
+    if (kIsWeb) {
+      return _webDatabase!.getBooksByStatus(status);
+    }
+    
     final db = await database;
     final List<Map<String, dynamic>> bookMaps = await db.query(
       'books',
@@ -181,6 +210,10 @@ class DatabaseService {
   }
   
   Future<int> updateBook(Book book) async {
+    if (kIsWeb) {
+      return _webDatabase!.updateBook(book);
+    }
+    
     final db = await database;
     final bookMap = book.toMap();
     
@@ -221,6 +254,10 @@ class DatabaseService {
   }
   
   Future<int> deleteBook(String id) async {
+    if (kIsWeb) {
+      return _webDatabase!.deleteBook(id);
+    }
+    
     final db = await database;
     
     // Delete book (cascade will delete related notes)
@@ -233,6 +270,10 @@ class DatabaseService {
   
   // Reading Goal CRUD operations
   Future<int> insertReadingGoal(ReadingGoal goal) async {
+    if (kIsWeb) {
+      return _webDatabase!.insertReadingGoal(goal);
+    }
+    
     final db = await database;
     return await db.insert(
       'reading_goals',
@@ -242,6 +283,10 @@ class DatabaseService {
   }
   
   Future<ReadingGoal> getReadingGoal(String id) async {
+    if (kIsWeb) {
+      return _webDatabase!.getReadingGoal(id);
+    }
+    
     final db = await database;
     final List<Map<String, dynamic>> maps = await db.query(
       'reading_goals',
@@ -257,6 +302,10 @@ class DatabaseService {
   }
   
   Future<List<ReadingGoal>> getAllReadingGoals() async {
+    if (kIsWeb) {
+      return _webDatabase!.getAllReadingGoals();
+    }
+    
     final db = await database;
     final List<Map<String, dynamic>> maps = await db.query('reading_goals');
     
@@ -264,6 +313,10 @@ class DatabaseService {
   }
   
   Future<List<ReadingGoal>> getActiveReadingGoals() async {
+    if (kIsWeb) {
+      return _webDatabase!.getActiveReadingGoals();
+    }
+    
     final db = await database;
     final now = DateTime.now().millisecondsSinceEpoch;
     
@@ -277,6 +330,10 @@ class DatabaseService {
   }
   
   Future<int> updateReadingGoal(ReadingGoal goal) async {
+    if (kIsWeb) {
+      return _webDatabase!.updateReadingGoal(goal);
+    }
+    
     final db = await database;
     return await db.update(
       'reading_goals',
@@ -287,6 +344,10 @@ class DatabaseService {
   }
   
   Future<int> deleteReadingGoal(String id) async {
+    if (kIsWeb) {
+      return _webDatabase!.deleteReadingGoal(id);
+    }
+    
     final db = await database;
     return await db.delete(
       'reading_goals',
@@ -294,4 +355,4 @@ class DatabaseService {
       whereArgs: [id],
     );
   }
-} 
+}

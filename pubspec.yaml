@@ -40,6 +40,7 @@ dependencies:
   
   # Database
   sqflite: ^2.3.2
+  sqflite_common_ffi: ^2.3.0+2
   path: ^1.9.0
   
   # UI components
@@ -48,7 +49,7 @@ dependencies:
   percent_indicator: ^4.2.3
   
   # Camera and barcode scanning
-  camera: ^0.10.5+9
+  camera: ^0.11.1
   flutter_barcode_scanner: ^2.0.0
   
   # Shared preferences for settings
@@ -58,8 +59,14 @@ dependencies:
   lottie: ^3.0.0
   
   # Utilities
-  intl: ^0.19.0
+  intl: ^0.20.2
   uuid: ^4.3.3
+  
+  # Firebase
+  firebase_core: ^3.13.0
+  firebase_auth: ^5.5.2
+  google_sign_in: ^6.3.0
+  cloud_firestore: ^5.6.6
 
 dev_dependencies:
   flutter_test:

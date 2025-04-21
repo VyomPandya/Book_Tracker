@@ -4,6 +4,7 @@ import 'package:percent_indicator/percent_indicator.dart';
 import 'package:book_tracker/models/reading_goal.dart';
 import 'package:book_tracker/providers/reading_goal_provider.dart';
 import 'package:intl/intl.dart';
+import 'package:book_tracker/screens/add_goal_screen.dart';
 
 class GoalsScreen extends StatelessWidget {
   const GoalsScreen({super.key});
@@ -113,14 +114,13 @@ class GoalsScreen extends StatelessWidget {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          // TODO: Navigate to add goal screen
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(
-              content: Text('Add goal functionality coming soon!'),
-            ),
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => const AddGoalScreen()),
           );
         },
         child: const Icon(Icons.add),
+        tooltip: 'Add Goal',
       ),
     );
   }

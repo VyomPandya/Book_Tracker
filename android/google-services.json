@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "248380538875",
+    "project_id": "book-track-d1d19",
+    "storage_bucket": "book-track-d1d19.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:248380538875:android:4c52aaddca698d2330d55e",
+        "android_client_info": {
+          "package_name": "vyom.booktracker"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDoCVEoe1g4hF2ztl4RHoOgEQKLCAL6P1o"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

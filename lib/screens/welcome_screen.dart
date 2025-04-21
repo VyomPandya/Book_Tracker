@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:book_tracker/screens/home_screen.dart';
 import 'package:book_tracker/themes/app_theme.dart';
+import 'package:book_tracker/screens/auth/login_screen.dart';
+import 'package:book_tracker/screens/auth/signup_screen.dart';
 
 class WelcomeScreen extends StatefulWidget {
   const WelcomeScreen({Key? key}) : super(key: key);
@@ -103,7 +105,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> with SingleTickerProvider
                 child: ElevatedButton(
                   onPressed: () {
                     Navigator.of(context).pushReplacement(
-                      MaterialPageRoute(builder: (context) => const HomeScreen()),
+                      MaterialPageRoute(builder: (context) => const SignupScreen()),
                     );
                   },
                   child: const Text('Get Started'),
@@ -114,9 +116,8 @@ class _WelcomeScreenState extends State<WelcomeScreen> with SingleTickerProvider
                 opacity: _fadeInAnimation,
                 child: TextButton(
                   onPressed: () {
-                    // TODO: Implement sign in functionality
                     Navigator.of(context).pushReplacement(
-                      MaterialPageRoute(builder: (context) => const HomeScreen()),
+                      MaterialPageRoute(builder: (context) => const LoginScreen()),
                     );
                   },
                   child: const Text('Already have an account? Sign In'),

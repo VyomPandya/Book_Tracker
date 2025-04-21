@@ -5,6 +5,7 @@ import 'package:book_tracker/models/book.dart';
 import 'package:book_tracker/providers/book_provider.dart';
 import 'package:book_tracker/screens/add_note_screen.dart';
 import 'package:book_tracker/screens/update_progress_screen.dart';
+import 'package:book_tracker/screens/add_book_screen.dart';
 import 'package:book_tracker/widgets/note_card.dart';
 import 'package:intl/intl.dart';
 
@@ -26,7 +27,12 @@ class BookDetailsScreen extends StatelessWidget {
           PopupMenuButton<String>(
             onSelected: (value) {
               if (value == 'edit') {
-                // TODO: Navigate to edit book screen
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => AddBookScreen(book: book),
+                  ),
+                );
               } else if (value == 'delete') {
                 _showDeleteConfirmation(context, bookProvider);
               }

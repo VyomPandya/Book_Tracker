@@ -4,11 +4,22 @@ import 'package:book_tracker/screens/home_screen.dart';
 import 'package:book_tracker/providers/book_provider.dart';
 import 'package:book_tracker/providers/reading_goal_provider.dart';
 import 'package:book_tracker/providers/theme_provider.dart';
+import 'package:book_tracker/providers/user_auth_provider.dart';
 import 'package:book_tracker/themes/app_theme.dart';
 import 'package:book_tracker/screens/welcome_screen.dart';
+import 'package:book_tracker/services/firebase_service.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:book_tracker/services/db_initialization.dart';
+import 'package:book_tracker/screens/auth/signup_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  
+  // Initialize database configuration
+  await initializeDatabaseConfig();
+  
+  // Initialize Firebase
+  await FirebaseService.initializeFirebase();
   
   // Create providers
   final themeProvider = ThemeProvider();
@@ -25,6 +36,7 @@ void main() async {
         ChangeNotifierProvider(create: (_) => themeProvider),
         ChangeNotifierProvider(create: (_) => bookProvider),
         ChangeNotifierProvider(create: (_) => readingGoalProvider),
+        ChangeNotifierProvider(create: (_) => UserAuthProvider()),
       ],
       child: const BookTrackerApp(),
     ),
@@ -36,17 +48,38 @@ class BookTrackerApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<ThemeProvider>(
-      builder: (context, themeProvider, child) {
+    return Consumer2<ThemeProvider, UserAuthProvider>(
+      builder: (context, themeProvider, authProvider, child) {
         return MaterialApp(
           title: 'Book Tracker',
           theme: AppTheme.lightTheme,
           darkTheme: AppTheme.darkTheme,
           themeMode: themeProvider.themeMode,
           debugShowCheckedModeBanner: false,
-          home: const WelcomeScreen(),
+          initialRoute: '/',
+          routes: {
+            '/': (context) => const WelcomeScreen(),
+            '/signup': (context) => const SignupScreen(),
+            '/home': (context) => const HomeScreen(),
+          },
         );
       },
     );
+  }
+  
+  Widget _handleCurrentScreen(UserAuthProvider authProvider) {
+    switch (authProvider.status) {
+      case AuthStatus.authenticated:
+        return const HomeScreen();
+      case AuthStatus.unauthenticated:
+        return const WelcomeScreen();
+      case AuthStatus.uninitialized:
+      default:
+        return const Scaffold(
+          body: Center(
+            child: CircularProgressIndicator(),
+          ),
+        );
+    }
   }
 }

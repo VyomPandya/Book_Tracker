@@ -4,7 +4,8 @@ import 'package:book_tracker/models/book.dart';
 import 'package:book_tracker/providers/book_provider.dart';
 
 class AddBookScreen extends StatefulWidget {
-  const AddBookScreen({super.key});
+  final Book? book;
+  const AddBookScreen({super.key, this.book});
 
   @override
   State<AddBookScreen> createState() => _AddBookScreenState();
@@ -23,6 +24,22 @@ class _AddBookScreenState extends State<AddBookScreen> {
   
   ReadingStatus _selectedStatus = ReadingStatus.wantToRead;
   bool _isLoading = false;
+  
+  @override
+  void initState() {
+    super.initState();
+    if (widget.book != null) {
+      final b = widget.book!;
+      _titleController.text = b.title;
+      _authorController.text = b.author;
+      _isbnController.text = b.isbn;
+      _descriptionController.text = b.description;
+      _pagesController.text = b.pageCount.toString();
+      _currentPageController.text = b.currentPage.toString();
+      _genresController.text = b.genres.join(', ');
+      _selectedStatus = b.status;
+    }
+  }
   
   @override
   void dispose() {
@@ -58,6 +75,7 @@ class _AddBookScreenState extends State<AddBookScreen> {
         
         // Create book object
         final book = Book(
+          id: widget.book?.id, // use existing id if editing
           title: _titleController.text.trim(),
           author: _authorController.text.trim(),
           isbn: _isbnController.text.trim(),
@@ -66,10 +84,15 @@ class _AddBookScreenState extends State<AddBookScreen> {
           currentPage: currentPage,
           status: _selectedStatus,
           genres: genres,
+          coverUrl: widget.book?.coverUrl ?? '',
+          notes: widget.book?.notes ?? [],
         );
         
-        // Add book to provider
-        await bookProvider.addBook(book);
+        if (widget.book != null) {
+          await bookProvider.updateBook(book);
+        } else {
+          await bookProvider.addBook(book);
+        }
         
         if (mounted) {
           Navigator.pop(context);
@@ -79,7 +102,7 @@ class _AddBookScreenState extends State<AddBookScreen> {
         if (mounted) {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
-              content: Text('Error adding book: $e'),
+              content: Text('Error saving book: $e'),
               backgroundColor: Colors.red,
             ),
           );
@@ -96,9 +119,10 @@ class _AddBookScreenState extends State<AddBookScreen> {
   
   @override
   Widget build(BuildContext context) {
+    final isEditing = widget.book != null;
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Add Book'),
+        title: Text(isEditing ? 'Edit Book' : 'Add Book'),
       ),
       body: _isLoading
           ? const Center(child: CircularProgressIndicator())
@@ -255,9 +279,9 @@ class _AddBookScreenState extends State<AddBookScreen> {
                       width: double.infinity,
                       child: ElevatedButton(
                         onPressed: _submitForm,
-                        child: const Padding(
-                          padding: EdgeInsets.symmetric(vertical: 12),
-                          child: Text('Add Book'),
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 12),
+                          child: Text(isEditing ? 'Save Changes' : 'Add Book'),
                         ),
                       ),
                     ),
@@ -267,4 +291,4 @@ class _AddBookScreenState extends State<AddBookScreen> {
             ),
     );
   }
-} 
+}
