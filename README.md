@@ -1,92 +1,76 @@
 # Book Tracker App
 
-A Flutter mobile application that allows users to track the books they are reading, have read, or want to read.
+## Overview
+Book Tracker is a cross-platform Flutter application that empowers users to manage their personal reading journey. The app allows you to track books you've read, are reading, or plan to read, set and monitor reading goals, and store notes—all with a privacy-first, offline-friendly approach. Authentication is handled via Firebase (email/password & Google), while all book and goal data is stored locally.
 
-## Features
+## Key Features
+- **User Authentication**: Secure sign up, sign in, and password reset using Firebase Auth (email/password & Google Sign-In).
+- **Bookshelf Management**: Add, edit, and organize books by status (Currently Reading, Want to Read, Read).
+- **Reading Progress**: Update your current page and visualize progress.
+- **Notes**: Attach notes and highlights to books.
+- **Reading Goals**: Set, track, and complete custom reading goals (by books, pages, or minutes; daily, weekly, monthly, yearly, or custom period).
+- **Statistics**: View summaries of your reading habits and achievements.
+- **Dark/Light Mode**: Switch themes for comfortable reading.
+- **Offline-First**: All book and goal data is stored locally (SQLite for mobile/desktop, SharedPreferences for web).
 
-📚 **Bookshelf View**: Three categories to organize your books
-- Currently Reading
-- Read
-- Want to Read
+## Architecture & Design Decisions
+- **Authentication**: Uses Firebase Auth for user login, signup, and Google Sign-In. No user data is stored in Firestore—only authentication.
+- **Local Storage**: Book and goal data is stored locally. On mobile/desktop, SQLite is used; on web, SharedPreferences is used for persistence.
+- **State Management**: Provider is used for efficient and scalable app state management.
+- **Cross-Platform**: Runs on Android, iOS, Web, and Desktop.
+- **UI**: Built with Material 3 for a modern, accessible experience.
 
-➕ **Add Books**: Manually add books with details like title, author, total pages, and reading progress.
-
-🔍 **Search & Filter**: Search for books within your library and filter by genre.
-
-📊 **Reading Progress**: Track your reading progress for each book by updating current page.
-
-📝 **Notes & Highlights**: Add notes or highlights with page references to remember important parts of books.
-
-🎯 **Reading Goals**: Set and track reading goals with different periods and metrics.
-
-🌓 **Dark/Light Mode**: Toggle between light and dark themes to suit your preference.
-
-📊 **Statistics**: View your reading statistics including total books, pages read, and more.
-
-## Technical Details
-
-- **Framework**: Flutter (Dart)
-- **State Management**: Provider
-- **Local Storage**: SQLite via sqflite package
-- **UI Design**: Material 3 design with custom components
-
-## Getting Started
-
-### Prerequisites
-
-- Flutter SDK (latest version recommended)
-- Android Studio or VS Code
-- Android or iOS emulator/device
-
-### Installation
-
-1. Clone this repository:
+## Project Structure
 ```
-git clone https://github.com/yourusername/book_tracker.git
+lib/
+  models/              # Data models (Book, ReadingGoal, etc.)
+  providers/           # State management (BookProvider, UserAuthProvider, etc.)
+  screens/             # UI screens (login, signup, home, book details, add/edit, goals, etc.)
+  services/            # Local storage, Firebase Auth integration
+  utils/               # Validators and helpers
+assets/images/         # App and Google logos
 ```
 
-2. Navigate to the project directory:
-```
-cd book_tracker
-```
+## Setup & Installation
+1. **Clone the repository:**
+   ```sh
+   git clone https://github.com/VyomPandya/Book_Tracker.git
+   cd Book_Tracker
+   ```
+2. **Install dependencies:**
+   ```sh
+   flutter pub get
+   ```
+3. **Firebase Setup:**
+   - Add your `google-services.json` (Android) and `GoogleService-Info.plist` (iOS) to the respective folders.
+   - Enable Email/Password and Google Sign-In in your Firebase project.
+4. **Run the app:**
+   ```sh
+   flutter run
+   ```
 
-3. Get dependencies:
-```
-flutter pub get
-```
-
-4. Run the app:
-```
-flutter run
-```
-
-## App Structure
-
-- `lib/models/`: Data classes for Book, Note, ReadingGoal
-- `lib/providers/`: State management with Provider
-- `lib/screens/`: UI screens for various features
-- `lib/services/`: Database and other services
-- `lib/widgets/`: Reusable UI components
-- `lib/themes/`: App theme configuration
-- `lib/utils/`: Utility functions and helpers
+## Usage
+- **Sign Up / Login:** Authenticate with email or Google.
+- **Add/Edit Books:** Fill in book details and track reading status.
+- **Add Notes:** Attach notes to any book.
+- **Set Goals:** Tap the "+" button on the Goals screen to add a new goal.
+- **Update Progress:** Use the "Update Progress" button on book details.
+- **View Stats:** Access statistics from the home screen.
 
 ## Screenshots
+*Add screenshots here to showcase the app UI.*
 
-*Screenshots will be added here*
+## Dependencies
+- [Flutter](https://flutter.dev/)
+- [firebase_auth](https://pub.dev/packages/firebase_auth)
+- [google_sign_in](https://pub.dev/packages/google_sign_in)
+- [provider](https://pub.dev/packages/provider)
+- [sqflite](https://pub.dev/packages/sqflite) (mobile/desktop)
+- [shared_preferences](https://pub.dev/packages/shared_preferences) (web)
+- [flutter_svg](https://pub.dev/packages/flutter_svg)
 
-## Future Enhancements
+## Credits
+Developed by VyomPandya (Vyom Pandya, 22it157@charusat.edu.in)
 
-- **Barcode/ISBN Scanner**: Scan book barcodes to add books automatically
-- **Book Cover API**: Fetch book covers from online APIs
-- **Reading Statistics**: More detailed statistics and visualizations
-- **Data Backup/Sync**: Cloud sync capability
-- **Social Features**: Share your reading progress and recommendations
-
-## License
-
-This project is licensed under the MIT License - see the LICENSE file for details.
-
-## Acknowledgements
-
-- Flutter team for the amazing framework
-- All contributors and package authors used in this project
+---
+*This project is for educational purposes. For issues or contributions, please open an issue or pull request on GitHub.*
